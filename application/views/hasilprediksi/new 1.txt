@@ -1,0 +1,1 @@
+SELECT * FROM `hasilprediksi` WHERE jenis='bulanan' AND h_id >= 1940632
