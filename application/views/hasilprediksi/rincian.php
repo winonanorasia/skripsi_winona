@@ -73,15 +73,15 @@
   var realdata = JSON.parse('<?= json_encode($hasil['tinggi']) ?>')
   // hardcoded. urgh
   var monthly = labels[0].length == 7;
-  var startdata = labels.indexOf(monthly ? '01-2013' : '2013-01-01');
-  var enddata = labels.indexOf(monthly ? '12-2019' : '2019-12-31') + 1;
+  var startdata = predicts.findIndex(x => x != '');
+  var enddata = realdata.length;
   var spanning = monthly ? 12 : 365.25;
   var spans = [
     ['1 Bulan', Math.trunc(spanning / 12)],
     ['3 Bulan', Math.trunc(spanning / 4)],
     ['1 Tahun', Math.trunc(spanning)],
     ['3 Tahun', Math.trunc(spanning * 3)],
-    ['Semua', enddata - startdata - 1],
+    ['Semua', enddata - startdata],
   ];
 
   window.onload = function() {
