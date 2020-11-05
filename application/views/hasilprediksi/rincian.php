@@ -81,7 +81,7 @@
     ['3 Bulan', Math.trunc(spanning / 4)],
     ['1 Tahun', Math.trunc(spanning)],
     ['3 Tahun', Math.trunc(spanning * 3)],
-    ['Semua', enddata - startdata],
+    ['Semua', enddata - startdata - 1],
   ];
 
   window.onload = function() {
@@ -211,7 +211,7 @@
     var span = spans[$('#length').val()];
     var length = span[1];
     $('#lengthout').text(span[0]);
-    var offset = Math.trunc($('#offset').val() * (enddata - length) / length) * length;
+    var offset = Math.trunc($('#offset').val() * (enddata - length) / length) * length + startdata;
     var min = offset;
     var max = offset + length + 1;
     console.log(max)
