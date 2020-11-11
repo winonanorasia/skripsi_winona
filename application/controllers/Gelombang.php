@@ -115,5 +115,4 @@ class Gelombang extends CI_Controller
         $this->session->set_flashdata('success', 'Berhasil diupload');
         redirect(base_url('gelombang'));
     }
-    
 }

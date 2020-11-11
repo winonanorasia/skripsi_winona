@@ -214,9 +214,12 @@ class Prediksi extends CI_Controller
 		}
 
 		$index_2019 = array_search('01-2019', $res['bulan_tahun'], TRUE);
-
-		$res['mse'] = array_sum(array_slice($res['(Et)^2'], $index_2019, 12)) / 12;
-		$res['mape'] = array_sum(array_slice($res['|((Xt-Ft)/Xt)*100|'], $index_2019, 12)) / 12;
+		//print_r(sizeof(array_slice($res['bulan_tahun'], $index_2019, sizeof($res['bulan_tahun']))));
+		$bagi = sizeof(array_slice($res['bulan_tahun'], $index_2019, sizeof($res['bulan_tahun'])));
+		$res['mse'] = array_sum(array_slice($res['(Et)^2'], $index_2019, $bagi)) / $bagi;
+		// print_r($res['mse']);
+		$res['mape'] = array_sum(array_slice($res['|((Xt-Ft)/Xt)*100|'], $index_2019, $bagi)) / $bagi;
+		// print_r($res['mape']);
 
 		//menambah tanggal
 		$date = new DateTime('01-' . array_slice($res['bulan_tahun'], -1, 1)[0]);
@@ -232,7 +235,7 @@ class Prediksi extends CI_Controller
 		//cetak tabel
 		$kolom = ['bulan_tahun', 'tinggi', 'periode', 'Yt', 'At', 'Tt', 'St-L', 'St', 'Ft', 'Xt-Ft', '(Et)^2', '((Xt-Ft)/Xt)*100', '|((Xt-Ft)/Xt)*100|'];
 		$mse = round($res['mse'], 4);
-		$mape = round($res['mape'], 1) . "%";
+		$mape = round($res['mape']) . "%";
 		$tabel = "<hr><p><b>MSE: $mse</b></p>";
 		$tabel .= "<p><b>MAPE: $mape</b></p>";
 		$tabel .= '<hr><table id="" class="table table-striped table-bordered"><thead><tr>';
@@ -360,8 +363,9 @@ class Prediksi extends CI_Controller
 		}
 
 		$index_2019 = array_search('2019-01-01', $res['tanggal'], TRUE);
-		$res['mse'] = array_sum(array_slice($res['(Et)^2'], $index_2019, 365)) / 365;
-		$res['mape'] = array_sum(array_slice($res['|((Xt-Ft)/Xt)*100|'], $index_2019, 365)) / 365;
+		$bagi = sizeof(array_slice($res['tanggal'], $index_2019, sizeof($res['tanggal'])));
+		$res['mse'] = array_sum(array_slice($res['(Et)^2'], $index_2019, $bagi)) / $bagi;
+		$res['mape'] = array_sum(array_slice($res['|((Xt-Ft)/Xt)*100|'], $index_2019, $bagi)) / $bagi;
 
 		//menambah tanggal
 
@@ -377,7 +381,7 @@ class Prediksi extends CI_Controller
 		//cetak tabel
 		$kolom = ['tanggal', 'tinggi', 'periode', 'Yt', 'At', 'Tt', 'St-L', 'St', 'Ft', 'Xt-Ft', '(Et)^2', '((Xt-Ft)/Xt)*100', '|((Xt-Ft)/Xt)*100|'];
 		$mse = round($res['mse'], 4);
-		$mape = round($res['mape'], 1) . "%";
+		$mape = round($res['mape']) . "%";
 		$tabel = "<hr><p><b>MSE: $mse  </b></p>";
 		$tabel .= "<p><b>MAPE: $mape </b></p>";
 		$tabel .= '<hr><table id="dataTable" class="table table-striped table-bordered"><thead><tr>';

@@ -19,7 +19,7 @@
 				<th>MSE Terbaik=<?= round(@$terbaik['harian-mse']->mse, 4) ?></th>
 				<th>MAPE Terbaik=<?= round(@$terbaik['harian-mape']->mape) . "%" ?></th>
 			</tr>
-			<tr>res
+			<tr>
 				<th>Alpha</th>
 				<td><?= @$terbaik['harian-mse']->alpha ?></td>
 				<td><?= @$terbaik['harian-mape']->alpha ?></td>
