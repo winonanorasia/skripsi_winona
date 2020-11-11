@@ -214,6 +214,7 @@ class Prediksi extends CI_Controller
 		}
 
 		$index_2019 = array_search('01-2019', $res['bulan_tahun'], TRUE);
+
 		$res['mse'] = array_sum(array_slice($res['(Et)^2'], $index_2019, 12)) / 12;
 		$res['mape'] = array_sum(array_slice($res['|((Xt-Ft)/Xt)*100|'], $index_2019, 12)) / 12;
 
@@ -230,8 +231,8 @@ class Prediksi extends CI_Controller
 
 		//cetak tabel
 		$kolom = ['bulan_tahun', 'tinggi', 'periode', 'Yt', 'At', 'Tt', 'St-L', 'St', 'Ft', 'Xt-Ft', '(Et)^2', '((Xt-Ft)/Xt)*100', '|((Xt-Ft)/Xt)*100|'];
-		$mse = round($res['mse'], 3);
-		$mape = round($res['mape'], 3);
+		$mse = round($res['mse'], 4);
+		$mape = round($res['mape'], 1) . "%";
 		$tabel = "<hr><p><b>MSE: $mse</b></p>";
 		$tabel .= "<p><b>MAPE: $mape</b></p>";
 		$tabel .= '<hr><table id="" class="table table-striped table-bordered"><thead><tr>';
@@ -243,7 +244,7 @@ class Prediksi extends CI_Controller
 			$tabel .= '<tr>';
 			foreach ($kolom as $y) {
 				$teks = @$res[$y][$x];
-				if (is_float($teks)) $teks = round($teks, 2);
+				if (is_float($teks)) $teks = round($teks, 4);
 				if (($y == 'Xt-Ft' | $y == '(Et)^2' | $y == '((Xt-Ft)/Xt)*100' | $y == '|((Xt-Ft)/Xt)*100|') & $x < $index_2019) {
 					$teks = '';
 				}
@@ -375,10 +376,10 @@ class Prediksi extends CI_Controller
 
 		//cetak tabel
 		$kolom = ['tanggal', 'tinggi', 'periode', 'Yt', 'At', 'Tt', 'St-L', 'St', 'Ft', 'Xt-Ft', '(Et)^2', '((Xt-Ft)/Xt)*100', '|((Xt-Ft)/Xt)*100|'];
-		$mse = round($res['mse'], 3);
-		$mape = round($res['mape'], 3);
-		$tabel = "<hr><p><b>MSE: $mse</b></p>";
-		$tabel .= "<p><b>MAPE: $mape</b></p>";
+		$mse = round($res['mse'], 4);
+		$mape = round($res['mape'], 1) . "%";
+		$tabel = "<hr><p><b>MSE: $mse  </b></p>";
+		$tabel .= "<p><b>MAPE: $mape </b></p>";
 		$tabel .= '<hr><table id="dataTable" class="table table-striped table-bordered"><thead><tr>';
 		foreach ($kolom as $x) {
 			$tabel .= "<th>$x</th>";
@@ -388,7 +389,7 @@ class Prediksi extends CI_Controller
 			$tabel .= '<tr>';
 			foreach ($kolom as $y) {
 				$teks = @$res[$y][$x];
-				if (is_float($teks)) $teks = round($teks, 2);
+				if (is_float($teks)) $teks = round($teks, 4);
 				if (($y == 'Xt-Ft' | $y == '(Et)^2' | $y == '((Xt-Ft)/Xt)*100' | $y == '|((Xt-Ft)/Xt)*100|') & $x < $index_2019) {
 					$teks = '';
 				}

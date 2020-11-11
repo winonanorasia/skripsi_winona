@@ -16,10 +16,10 @@
 		<table class="table table-bordered table-striped">
 			<tr>
 				<th></th>
-				<th>MSE Terbaik=<?= @$terbaik['harian-mse']->mse ?></th>
-				<th>MAPE Terbaik=<?= @$terbaik['harian-mape']->mape ?></th>
+				<th>MSE Terbaik=<?= round(@$terbaik['harian-mse']->mse, 4) ?></th>
+				<th>MAPE Terbaik=<?= round(@$terbaik['harian-mape']->mape) . "%" ?></th>
 			</tr>
-			<tr>
+			<tr>res
 				<th>Alpha</th>
 				<td><?= @$terbaik['harian-mse']->alpha ?></td>
 				<td><?= @$terbaik['harian-mape']->alpha ?></td>
@@ -53,8 +53,8 @@
 		<table class="table table-bordered table-striped">
 			<tr>
 				<th></th>
-				<th>MSE Terbaik=<?= @$terbaik['bulanan-mse']->mse ?></th>
-				<th>MAPE Terbaik=<?= @$terbaik['bulanan-mape']->mape ?></th>
+				<th>MSE Terbaik=<?= round(@$terbaik['bulanan-mse']->mse, 4) ?></th>
+				<th>MAPE Terbaik=<?= round(@$terbaik['bulanan-mape']->mape) . "%" ?></th>
 			</tr>
 			<tr>
 				<th>Alpha</th>
@@ -110,8 +110,8 @@
 							<td><?= $h->alpha ?></td>
 							<td><?= $h->beta ?></td>
 							<td><?= $h->gamma ?></td>
-							<td><?= $h->mse ?></td>
-							<td><?= $h->mape ?></td>
+							<td><?= round($h->mse, 4)  ?></td>
+							<td><?= round($h->mape) . "%" ?></td>
 							<td align="center">
 								<a class="btn btn-primary mb-2 btn-sm" href="<?= base_url() ?>prediksi/rincian/<?= $h->h_id ?>"><i class="fa fa-info-circle"></i> Rincian</a>
 								<a onclick="deleteConfirm('<?php echo site_url('prediksi/delete/' . $h->h_id) ?>')" href="#" class="btn btn-sm btn-danger mb-2"><i class="fas fa fa-trash"></i> Hapus</a>
