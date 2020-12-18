@@ -7,10 +7,9 @@
 <div class="card mb-3">
   <div class="card-header">
     <a href="<?php echo site_url('gelombang/create') ?>"><i class="fas fa-plus"></i> Add New</a>
-    <a class="float-right" href="#" data-toggle="modal" data-target="#uploadModal""><i class=" fas fa-upload"></i> Upload File</a>
+    <a class="float-right" href="#" data-toggle="modal" data-target="#uploadModal"><i class=" fas fa-upload"></i> Upload File</a>
   </div>
   <div class="card-body">
-
     <div class="table-responsive">
       <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
         <thead>
@@ -40,7 +39,6 @@
               </td>
               <td align="center">
                 <a href="<?php echo base_url('gelombang/update/' . $dg->d_id) ?>" class="btn btn-small"><i class="fas fa-edit"></i></a>
-
                 <a onclick="deleteConfirm('<?php echo base_url('gelombang/delete/' . $dg->d_id) ?>')" href="#!" class="btn btn-small text-danger"><i class="fas fa-trash"></i></a>
               </td>
             </tr>

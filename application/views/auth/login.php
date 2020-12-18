@@ -20,8 +20,12 @@
 <style>
   body {
     background-image: url("<?php echo base_url(); ?>wave-4833997_960_720.jpg");
-    background-size: 1400px;
+    /* background-size: 1800px 700px; */
     /* background-size: auto; */
+    height: 500px;
+    background-position: center;
+    background-size: cover;
+    position: relative;
   }
 </style>
 

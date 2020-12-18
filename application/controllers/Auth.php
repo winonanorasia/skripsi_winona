@@ -22,6 +22,7 @@ class Auth extends CI_Controller
 
         $data['page'] = $data['title'] = 'Login';
 
+
         $this->form_validation->set_rules($this->Users->rules());
         if ($this->form_validation->run() == TRUE) {
             $where = array(

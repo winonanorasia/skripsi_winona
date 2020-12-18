@@ -91,8 +91,9 @@ class Gelombang extends CI_Controller
         $mulai = false;
         while (($row = fgetcsv($file, 1000, ";")) !== FALSE) {
             if ($mulai) $this->db->insert('datagelombang', [
-                'd_tanggal' => $row[0],
-                'd_tinggi' => str_replace(',', '.', $row[1])
+                'd_tanggal' => date('Y-m-d', strtotime(strtr($row[0], '/', '-'))),
+                // 'd_tanggal' => date_parse_from_format("Y.m.d", $row[0]),
+                'd_tinggi' => str_replace(',', '.', $row[1]),
             ]);
             $mulai = true;
         }

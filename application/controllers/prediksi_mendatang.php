@@ -47,7 +47,7 @@ class prediksi_mendatang extends CI_Controller
 
         if ($this->Periode->delete($id)) {
             $this->session->set_flashdata('success', 'Berhasil dihapus');
-            redirect(base_url('prediksi'));
+            redirect(base_url('prediksi_mendatang'));
         }
     }
 
@@ -165,10 +165,10 @@ class prediksi_mendatang extends CI_Controller
                     $res['St-L'][] = $res['St'][$k];
 
                     // forecaset Ft
-                    $res['Ft'][] = $res['At'][$k - 1] + $res['Tt'][$k - 1] + $res['St-L'][$k];
+                    $res['Ft'][] = round($res['At'][$k - 1] + $res['Tt'][$k - 1] + $res['St-L'][$k], 4);
                     if ($k == count($res['tinggi']) - 1) {
                         for ($i = 1; $i <= $l; $i++) {
-                            $res['Ft'][] = $res['At'][$k] + $res['Tt'][$k] * $i + $res['St-L'][$k + $i];
+                            $res['Ft'][] = round($res['At'][$k] + $res['Tt'][$k] * $i + $res['St-L'][$k + $i], 4);
                         }
                     }
                 }
@@ -236,7 +236,7 @@ class prediksi_mendatang extends CI_Controller
                 $tabel .= '<tr>';
                 foreach ($kolom as $y) {
                     $teks = @$res[$y][$x];
-                    if (is_float($teks)) $teks = round($teks, 2);
+                    if (is_float($teks)) $teks = round($teks, 4);
                     if (($y == 'Xt-Ft' | $y == '(Et)^2' | $y == '((Xt-Ft)/Xt)*100' | $y == '|((Xt-Ft)/Xt)*100|') & $x < $index_2019) {
                         $teks = '';
                     }
@@ -295,12 +295,11 @@ class prediksi_mendatang extends CI_Controller
                     $res['St-L'][] = $res['St'][$k];
 
                     // forecaset Ft
-                    $res['Ft'][] = $res['At'][$k - 1] + $res['Tt'][$k - 1] + $res['St-L'][$k];
-
+                    $res['Ft'][] = round($res['At'][$k - 1] + $res['Tt'][$k - 1] + $res['St-L'][$k], 4);
                     if ($k == count($res['tinggi']) - 1) {
                         // 
                         for ($i = 1; $i <= $l; $i++) {
-                            $res['Ft'][] = $res['At'][$k] + $res['Tt'][$k] * $i + $res['St-L'][$k + $i];
+                            $res['Ft'][] = round($res['At'][$k] + $res['Tt'][$k] * $i + $res['St-L'][$k + $i], 4);
                         }
                     }
                 }
@@ -366,7 +365,7 @@ class prediksi_mendatang extends CI_Controller
                 $tabel .= '<tr>';
                 foreach ($kolom as $y) {
                     $teks = @$res[$y][$x];
-                    if (is_float($teks)) $teks = round($teks, 2);
+                    if (is_float($teks)) $teks = round($teks, 4);
                     if (($y == 'Xt-Ft' | $y == '(Et)^2' | $y == '((Xt-Ft)/Xt)*100' | $y == '|((Xt-Ft)/Xt)*100|') & $x < $index_2019) {
                         $teks = '';
                     }

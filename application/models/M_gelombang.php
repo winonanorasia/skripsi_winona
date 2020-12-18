@@ -57,7 +57,7 @@ class M_gelombang extends CI_Model
             array_push($data_fix, (object)[
                 'bulan_tahun' => $x,
                 'periode' => $no,
-                'tinggi' => array_sum($data_new[$x]) / count($data_new[$x])
+                'tinggi' => round(array_sum($data_new[$x]) / count($data_new[$x]), 4)
             ]);
             $no++;
         }

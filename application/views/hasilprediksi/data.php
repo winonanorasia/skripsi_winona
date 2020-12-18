@@ -17,7 +17,7 @@
 			<tr>
 				<th></th>
 				<th>MSE Terbaik=<?= round(@$terbaik['harian-mse']->mse, 4) ?></th>
-				<th>MAPE Terbaik=<?= round(@$terbaik['harian-mape']->mape) . "%" ?></th>
+				<th>MAPE Terbaik=<?= round(@$terbaik['harian-mape']->mape, 4)  ?></th>
 			</tr>
 			<tr>
 				<th>Alpha</th>
@@ -54,7 +54,7 @@
 			<tr>
 				<th></th>
 				<th>MSE Terbaik=<?= round(@$terbaik['bulanan-mse']->mse, 4) ?></th>
-				<th>MAPE Terbaik=<?= round(@$terbaik['bulanan-mape']->mape) . "%" ?></th>
+				<th>MAPE Terbaik=<?= round(@$terbaik['bulanan-mape']->mape, 4) ?></th>
 			</tr>
 			<tr>
 				<th>Alpha</th>
@@ -103,7 +103,6 @@
 				<tbody>
 					<?php $no = $nomor_halaman == 1 ? 1 : $nomor_halaman + 1;
 					foreach ($data->result() as $h) : ?>
-
 						<tr>
 							<td><?= $no++ ?></td>
 							<td><?= $h->jenis ?></td>
@@ -111,7 +110,7 @@
 							<td><?= $h->beta ?></td>
 							<td><?= $h->gamma ?></td>
 							<td><?= round($h->mse, 4)  ?></td>
-							<td><?= round($h->mape) . "%" ?></td>
+							<td><?= round($h->mape, 4)  ?></td>
 							<td align="center">
 								<a class="btn btn-primary mb-2 btn-sm" href="<?= base_url() ?>prediksi/rincian/<?= $h->h_id ?>"><i class="fa fa-info-circle"></i> Rincian</a>
 								<a onclick="deleteConfirm('<?php echo site_url('prediksi/delete/' . $h->h_id) ?>')" href="#" class="btn btn-sm btn-danger mb-2"><i class="fas fa fa-trash"></i> Hapus</a>

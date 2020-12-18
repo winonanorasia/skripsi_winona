@@ -17,17 +17,19 @@
     } else {
       $this->load->view("_partials/sidebar.php");
     }
+
     ?> <div id="content-wrapper">
-
       <div class="container-fluid">
-
         <!-- Page Content -->
         <?php // MAIN CONTENT DISINI
         if (isset($page) && $page != '') {
           $this->load->view($page);
+          // $this->load->view('home/overview');
         } else {
+          //  $this->load->view($page!);
           $this->load->view('home/overview');
         }
+
         ?>
       </div>
       <!-- /.container-fluid -->

@@ -3,51 +3,51 @@
 <hr>
 
 <div class="container-fluid">
-    <!-- Small boxes (Stat box) -->
-    <div class="row">
-        <div class="col-lg-4 col-6">
-            <!-- small box -->
-            <div class="small-box bg-info" style=" text-align:left">
-                <div class=" inner" style=" padding: 50px">
-                    <center><i class="fas fa-info-circle" style="font-size: 60px"></i>
-                        <h3><?= @$alpha ?></h3>
-                        <p> Alpha</p>
-                    </center>
-                </div>
-            </div>
-        </div> <!-- ./col -->
-        <div class="col-lg-4 col-6">
-            <!-- small box -->
-            <div class="small-box bg-success" style="text-align:center">
-                <div class=" inner" style=" padding: 50px">
-                    <center>
-                        <i class="fas fa-info-circle" style="font-size: 60px"></i>
-                        <h3><?= @$beta ?></h3>
-                        <p> Beta</p>
-                    </center>
-                </div>
-            </div>
-        </div> <!-- ./col -->
-        <div class="col-lg-4 col-6">
-            <!-- small box -->
-            <div class="small-box bg-warning" style=" text-align:right">
-                <div class=" inner" style="padding: 50px">
-                    <center>
-                        <i class=" fas fa-info-circle" style="font-size: 60px"></i>
-                        <h3><?= @$gamma ?></h3>
-                        <p> Gamma</p>
-                    </center>
-                </div>
-            </div>
+  <!-- Small boxes (Stat box) -->
+  <div class="row">
+    <div class="col-lg-4 col-6">
+      <!-- small box -->
+      <div class="small-box bg-info" style=" text-align:left">
+        <div class=" inner" style=" padding: 50px">
+          <center><i class="fas fa-info-circle" style="font-size: 60px"></i>
+            <h3><?= @$alpha ?></h3>
+            <p> Alpha</p>
+          </center>
         </div>
-    </div>
-    <br>
-    <div class="row">
-        <div class="col-lg-4 col-6">
+      </div>
+    </div> <!-- ./col -->
+    <div class="col-lg-4 col-6">
+      <!-- small box -->
+      <div class="small-box bg-success" style="text-align:center">
+        <div class=" inner" style=" padding: 50px">
+          <center>
+            <i class="fas fa-info-circle" style="font-size: 60px"></i>
+            <h3><?= @$beta ?></h3>
+            <p> Beta</p>
+          </center>
         </div>
+      </div>
+    </div> <!-- ./col -->
+    <div class="col-lg-4 col-6">
+      <!-- small box -->
+      <div class="small-box bg-warning" style=" text-align:right">
+        <div class=" inner" style="padding: 50px">
+          <center>
+            <i class=" fas fa-info-circle" style="font-size: 60px"></i>
+            <h3><?= @$gamma ?></h3>
+            <p> Gamma</p>
+          </center>
+        </div>
+      </div>
     </div>
-    <hr>
-    <?= $tabel   ?>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-lg-4 col-6">
+    </div>
+  </div>
+  <hr>
+  <?= $tabel   ?>
 
   <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3"></script> -->
   <script src="<?= base_url('assets/js/chart.js') ?>"></script>
@@ -56,14 +56,14 @@
   <!-- <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@0.7.5/dist/chartjs-plugin-zoom.min.js"></script> -->
   <script src="<?= base_url('assets/js/chartjs-plugin-zoom.min.js') ?>"></script>
 
-    <canvas id="predcanvas"></canvas>
-    <script id="preddata" type="application/json"><?= $data ?></script>
-<script>
-    
-
+  <canvas id="predcanvas"></canvas>
+  <script id="preddata" type="application/json">
+    <?= $data ?>
+  </script>
+  <script>
     window.onload = function() {
-        var preddata = JSON.parse($('#preddata').html());
-        window.predLine = Chart.Line(document.getElementById('predcanvas').getContext('2d'), {
+      var preddata = JSON.parse($('#preddata').html());
+      window.predLine = Chart.Line(document.getElementById('predcanvas').getContext('2d'), {
         data: {
           labels: preddata.tanggal,
           datasets: [{
@@ -81,7 +81,7 @@
           stacked: false,
           title: {
             display: true,
-            text: 'Grafik Data Forecasting'
+            text: 'Grafik Data Forecasting Mendatang'
           },
           plugins: {
             zoom: {
@@ -95,23 +95,23 @@
               }
             }
           },
-				scales: {
-					xAxes: [{
-						display: true,
-						scaleLabel: {
-							display: true,
-							labelString: 'Periode'
-						}
-					}],
-					yAxes: [{
-						display: true,
-						scaleLabel: {
-							display: true,
-							labelString: 'Ketinggian Gelombang (m)'
-						}
-					}]
-				}
+          scales: {
+            xAxes: [{
+              display: true,
+              scaleLabel: {
+                display: true,
+                labelString: 'Keterangan Waktu'
+              }
+            }],
+            yAxes: [{
+              display: true,
+              scaleLabel: {
+                display: true,
+                labelString: 'Ketinggian Gelombang (m)'
+              }
+            }]
+          }
         }
       });
     };
-</script>
+  </script>

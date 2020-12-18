@@ -16,7 +16,7 @@
                 </div>
                 <div class="col">
                     <label>Periode Mulai*</label>
-                    <input class="form-control <?php echo form_error('periode-mulai') ? 'is-invalid' : '' ?>" type="number" name="periode-mulai" min="1" max="31" value="<?= @$_GET['periode-mulai']?>" step="1" />
+                    <input class="form-control <?php echo form_error('periode-mulai') ? 'is-invalid' : '' ?>" type="number" name="periode-mulai" min="1" max="31" value="<?= @$_GET['periode-mulai'] ?>" step="1" />
                 </div>
                 <div class="col">
                     <label>Periode Akhir*</label>
@@ -33,8 +33,8 @@
     </div>
 </div>
 <hr>
-<p>MSE: <?=@$mse?></p>
-<p>MAPE: <?=@$mape?></p>
+<p>MSE: <?= round(@$mse, 4) ?></p>
+<p>MAPE: <?= round(@$mape) . "%" ?></p>
 <?= @$hasil['tabel'] ?>
 <script>
 

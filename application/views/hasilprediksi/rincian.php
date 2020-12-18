@@ -70,6 +70,13 @@
 <script>
   var labels = JSON.parse('<?= json_encode($hasil['tanggal'] ?? $hasil['bulan_tahun']) ?>')
   var predicts = JSON.parse('<?= json_encode($hasil['Ft']) ?>')
+  // predicts = predicts.map(
+  //   x => {
+  //     x = math.round(x * 10) / 10;
+  //     return x;
+  //   }
+  // ) 
+
   var realdata = JSON.parse('<?= json_encode($hasil['tinggi']) ?>')
   // hardcoded. urgh
   var monthly = labels[0].length == 7;
@@ -109,7 +116,7 @@
         stacked: false,
         title: {
           display: true,
-          text: 'Grafik Data Training'
+          text: 'Grafik Perbandingan Data Aktual dan Data Forecasting'
         },
         type: "time",
         distribution: 'series',
@@ -140,7 +147,7 @@
             display: true,
             scaleLabel: {
               display: true,
-              labelString: 'Periode'
+              labelString: 'Keterangan Waktu'
             }
           }],
           yAxes: [{
@@ -171,7 +178,7 @@
         stacked: false,
         title: {
           display: true,
-          text: 'Grafik Data Forecasing'
+          text: 'Grafik Data Forecasting Mendatang'
         },
         plugins: {
           zoom: {
@@ -190,7 +197,7 @@
             display: true,
             scaleLabel: {
               display: true,
-              labelString: 'Periode'
+              labelString: 'Keterangan Waktu'
             }
           }],
           yAxes: [{

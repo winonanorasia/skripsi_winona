@@ -28,7 +28,8 @@ class Prediksi extends CI_Controller
 		//$config['total_rows'] = $this->db->count_all('hasilprediksi'); //total row
 		$config['total_rows'] = $jml_data; //total row
 		$config['per_page'] = 20;  //show record per halaman
-		$config["uri_segment"] = 3;  // uri parameter
+		$config['uri_segment'] = 3;  // uri parameter
+		//print_R($config['uri_segment']);
 		//$choice = $config["total_rows"] / $config["per_page"];
 		$config["num_links"] = 3;
 
@@ -54,8 +55,9 @@ class Prediksi extends CI_Controller
 
 		$this->pagination->initialize($config);
 		$data['halaman'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+		// print_R($data['halaman']);
 
-		//panggil function get_mahasiswa_list yang ada pada mmodel mahasiswa_model. 
+		//panggil function get_mahasiswa_list yang ada pada model prediksi model. 
 		$data['data'] = $this->Prediksi->get_prediksi_list($config["per_page"], $data['halaman']);
 
 		$data['pagination'] = $this->pagination->create_links();
@@ -150,14 +152,14 @@ class Prediksi extends CI_Controller
 		$res['tinggi'] = array_column($data, 'tinggi');
 
 		//inisial
-		// $l = $input['l'];
 		$l = 12;
-
 		for ($i = 0; $i < $l; $i++) {
 			$res['Yt'][] = floatval($res['tinggi'][$l + $i]) - floatval($res['tinggi'][$i]);
+			// $res['Yt'][] = bcsub(floatval($res['tinggi'][$l + $i]), floatval($res['tinggi'][$i]), 4);
 		}
-		$rata2 = array_slice($res['tinggi'], 0, 13);
+		$rata2 = array_slice($res['tinggi'], 0, 12);
 		$at = array_sum($rata2) / count($rata2);
+		// print_r($at);
 
 		foreach ($res['Yt'] as $k => $v) {
 			$res['St'][] = floatval($res['tinggi'][$k]) - $at;
@@ -180,10 +182,10 @@ class Prediksi extends CI_Controller
 
 					// forecaset Ft
 
-					$res['Ft'][] = $res['At'][$k - 1] + $res['Tt'][$k - 1] + $res['St-L'][$k];
+					$res['Ft'][] = round($res['At'][$k - 1] + $res['Tt'][$k - 1] + $res['St-L'][$k], 4);
 					if ($k == count($res['tinggi']) - 1) {
 						for ($i = 1; $i <= $l; $i++) {
-							$res['Ft'][] = $res['At'][$k] + $res['Tt'][$k] * $i + $res['St-L'][$k + $i];
+							$res['Ft'][] = round($res['At'][$k] + $res['Tt'][$k] * $i + $res['St-L'][$k + $i], 4);
 						}
 					}
 				}
@@ -211,17 +213,18 @@ class Prediksi extends CI_Controller
 				$res['((Xt-Ft)/Xt)*100'][] = '';
 				$res['|((Xt-Ft)/Xt)*100|'][] = '';
 			}
+			// print_r($res['Ft'][$k]);
+			//	print_R($val);
+			//	print_r($val - $res['Ft'][$k]);
 		}
 
 		$index_2019 = array_search('01-2019', $res['bulan_tahun'], TRUE);
 		//print_r(sizeof(array_slice($res['bulan_tahun'], $index_2019, sizeof($res['bulan_tahun']))));
 		$bagi = sizeof(array_slice($res['bulan_tahun'], $index_2019, sizeof($res['bulan_tahun'])));
 		$res['mse'] = array_sum(array_slice($res['(Et)^2'], $index_2019, $bagi)) / $bagi;
-		// print_r($res['mse']);
 		$res['mape'] = array_sum(array_slice($res['|((Xt-Ft)/Xt)*100|'], $index_2019, $bagi)) / $bagi;
-		// print_r($res['mape']);
 
-		//menambah tanggal
+		//menambah bulan
 		$date = new DateTime('01-' . array_slice($res['bulan_tahun'], -1, 1)[0]);
 		// echo $res['mape'];
 		for ($x = 0; $x < $l; $x++) {
@@ -235,7 +238,7 @@ class Prediksi extends CI_Controller
 		//cetak tabel
 		$kolom = ['bulan_tahun', 'tinggi', 'periode', 'Yt', 'At', 'Tt', 'St-L', 'St', 'Ft', 'Xt-Ft', '(Et)^2', '((Xt-Ft)/Xt)*100', '|((Xt-Ft)/Xt)*100|'];
 		$mse = round($res['mse'], 4);
-		$mape = round($res['mape']) . "%";
+		$mape = round($res['mape'], 4) . "%";
 		$tabel = "<hr><p><b>MSE: $mse</b></p>";
 		$tabel .= "<p><b>MAPE: $mape</b></p>";
 		$tabel .= '<hr><table id="" class="table table-striped table-bordered"><thead><tr>';
@@ -285,8 +288,8 @@ class Prediksi extends CI_Controller
 			'alpha' => $input['alpha'],
 			'beta' => $input['beta'],
 			'gamma' => $input['gamma'],
-			'mse' => $res['mse'],
-			'mape' => $res['mape']
+			'mse' => round($res['mse'], 4),
+			'mape' => round($res['mape'], 4) . "%",
 		]);
 
 		return $res;
@@ -303,10 +306,12 @@ class Prediksi extends CI_Controller
 		$l = 31;
 		for ($i = 0; $i < $l; $i++) {
 			$res['Yt'][] = floatval($res['tinggi'][$l + $i]) - floatval($res['tinggi'][$i]);
+			// $res['Yt'][] = bcsub(floatval($res['tinggi'][$l + $i]), floatval($res['tinggi'][$i]), 4);
 		}
 
-		$rata2 = array_slice($res['tinggi'], 0, 32);
+		$rata2 = array_slice($res['tinggi'], 0, 31);
 		$at = array_sum($rata2) / count($rata2);
+		// print_r($at);
 
 		foreach ($res['Yt'] as $k => $v) {
 			$res['St'][] = floatval($res['tinggi'][$k]) - $at;
@@ -329,10 +334,10 @@ class Prediksi extends CI_Controller
 					$res['St-L'][] = $res['St'][$k];
 
 					// forecaset Ft
-					$res['Ft'][] = $res['At'][$k - 1] + $res['Tt'][$k - 1] + $res['St-L'][$k];
+					$res['Ft'][] = round($res['At'][$k - 1] + $res['Tt'][$k - 1] + $res['St-L'][$k], 4);
 					if ($k == count($res['tinggi']) - 1) {
 						for ($i = 1; $i <= $l; $i++) {
-							$res['Ft'][] = $res['At'][$k] + $res['Tt'][$k] * $i + $res['St-L'][$k + $i];
+							$res['Ft'][] = round($res['At'][$k] + $res['Tt'][$k] * $i + $res['St-L'][$k + $i], 4);
 						}
 					}
 				}
@@ -364,11 +369,11 @@ class Prediksi extends CI_Controller
 
 		$index_2019 = array_search('2019-01-01', $res['tanggal'], TRUE);
 		$bagi = sizeof(array_slice($res['tanggal'], $index_2019, sizeof($res['tanggal'])));
+		// print_r($bagi);
 		$res['mse'] = array_sum(array_slice($res['(Et)^2'], $index_2019, $bagi)) / $bagi;
 		$res['mape'] = array_sum(array_slice($res['|((Xt-Ft)/Xt)*100|'], $index_2019, $bagi)) / $bagi;
 
 		//menambah tanggal
-
 		$date = new DateTime(array_slice($res['tanggal'], -1, 1)[0]);
 		for ($x = 0; $x < $l; $x++) {
 			$date->modify('+1 day');
@@ -381,7 +386,7 @@ class Prediksi extends CI_Controller
 		//cetak tabel
 		$kolom = ['tanggal', 'tinggi', 'periode', 'Yt', 'At', 'Tt', 'St-L', 'St', 'Ft', 'Xt-Ft', '(Et)^2', '((Xt-Ft)/Xt)*100', '|((Xt-Ft)/Xt)*100|'];
 		$mse = round($res['mse'], 4);
-		$mape = round($res['mape']) . "%";
+		$mape = round($res['mape'], 4) . "%";
 		$tabel = "<hr><p><b>MSE: $mse  </b></p>";
 		$tabel .= "<p><b>MAPE: $mape </b></p>";
 		$tabel .= '<hr><table id="dataTable" class="table table-striped table-bordered"><thead><tr>';
@@ -411,8 +416,8 @@ class Prediksi extends CI_Controller
 			'alpha' => $input['alpha'],
 			'beta' => $input['beta'],
 			'gamma' => $input['gamma'],
-			'mse' => $res['mse'],
-			'mape' => $res['mape']
+			'mse' => round($res['mse'], 4),
+			'mape' => round($res['mape'], 4) . "%",
 		]);
 
 		return $res;
@@ -421,6 +426,21 @@ class Prediksi extends CI_Controller
 	public function auto()
 	{
 		if (!empty($_POST)) {
+			//harian
+			$data_harian = $this->Gelombang->getAll();
+			for ($alpha = 0.1; $alpha < 0.9; $alpha += 0.1) {
+				for ($beta = 0.1; $beta < 0.9; $beta += 0.1) {
+					for ($gamma = 0.1; $gamma < 0.9; $gamma += 0.1) {
+						// echo $alpha . '-' . $beta . '-' . $gamma . '|';
+						$input['data'] = $data_harian;
+						$input['alpha'] = $alpha;
+						$input['beta'] = $beta;
+						$input['gamma'] = $gamma;
+						$this->prediksi_harian($input);
+					}
+				}
+			}
+
 			//bulanan
 			$data_bulanan = $this->Gelombang->getBulanan();
 			for ($alpha = 0.1; $alpha < 0.9; $alpha += 0.1) {
@@ -436,20 +456,20 @@ class Prediksi extends CI_Controller
 				}
 			}
 
-			//harian
-			$data_harian = $this->Gelombang->getAll();
-			for ($alpha = 0.1; $alpha < 0.9; $alpha += 0.1) {
-				for ($beta = 0.1; $beta < 0.9; $beta += 0.1) {
-					for ($gamma = 0.1; $gamma < 0.9; $gamma += 0.1) {
-						// echo $alpha . '-' . $beta . '-' . $gamma . '|';
-						$input['data'] = $data_harian;
-						$input['alpha'] = $alpha;
-						$input['beta'] = $beta;
-						$input['gamma'] = $gamma;
-						$this->prediksi_harian($input);
-					}
-				}
-			}
+			// //harian
+			// $data_harian = $this->Gelombang->getAll();
+			// for ($alpha = 0.1; $alpha < 0.9; $alpha += 0.1) {
+			// 	for ($beta = 0.1; $beta < 0.9; $beta += 0.1) {
+			// 		for ($gamma = 0.1; $gamma < 0.9; $gamma += 0.1) {
+			// 			// echo $alpha . '-' . $beta . '-' . $gamma . '|';
+			// 			$input['data'] = $data_harian;
+			// 			$input['alpha'] = $alpha;
+			// 			$input['beta'] = $beta;
+			// 			$input['gamma'] = $gamma;
+			// 			$this->prediksi_harian($input);
+			// 		}
+			// 	}
+			// }
 		}
 		$data['page'] = 'hasilprediksi/auto';
 		$this->load->view('main', $data);
